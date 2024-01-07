@@ -1,0 +1,96 @@
+//bisection method...
+#include <stdio.h>
+#include <math.h>
+float f(float x)
+{
+    float val;
+    val = pow(x, 3) + (2 * x) - 5;
+    return val;
+}
+int main()
+{
+    float a, b, c, fa, fb, fc, s;
+    int i = 1;
+    printf("Enter two initial gueses and stopping point\n");
+    scanf("%f\n%f\n%f", &a, &b, &s);
+
+    fa = f(a);
+    fb = f(b);
+    while (fa * fb > 0)
+    {
+        printf("wrong choices\nEnter new choices\n ");
+        scanf("%f\n%f", &a, &b);
+        fa = f(a);
+        fb = f(b);
+    }
+    printf("Step\t\ta\tb\tc\tfa\tfb\tfc\n");
+    do
+    {
+        c = (a + b) / 2;
+        fc = f(c);
+
+        printf("%d\t\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%0.4f\n", i, a, b, c, fa, fb, fc);
+
+        if (fa * fc < 0)
+        {
+            b = c;
+
+            fb = f(b);
+        }
+        else
+        {
+            a = c;
+
+            fa = f(a);
+        }
+        i++;
+
+    } while (fabs(fc) > s);
+
+    printf("root =%f", c);
+    return 0;
+}
+
+
+////secant method..
+#include <stdio.h>
+#include <math.h>
+
+// #define f(x) pow(x, 3) + (2 * x) - 5
+
+float f(float x)
+{
+    float val;
+    val = pow(x, 3) + (2 * x) - 5;
+    return val;
+}
+int main()
+{
+    float a, b, c, fa, fb, fc, itr, s;
+    int i = 1;
+    printf("Enter two initial gueses and stopping point\n");
+    scanf("%f\n%f\n%f", &a, &b, &s);
+
+    printf("Step\t\ta\tb\tc\tfa\tfb\tfc\n");
+    do
+    {
+        fa = f(a);
+        fb = f(b);
+
+        c = b - (b - a) * (fb / (fb - fa));
+        fc = f(c);
+
+        printf("%d\t\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%0.4f\n", i, a, b, c, fa, fb, fc);
+
+        a = b;
+        fa = fb;
+        b = c;
+
+        fb = fc;
+        i = i + 1;
+
+    } while (fabs(fa - fb) > s);
+    printf("root is:%f", c);
+
+    return 0;
+}
